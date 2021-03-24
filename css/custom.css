@@ -1,8 +1,19 @@
 #keyboard-wrapper {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 50%;
+  min-width: 300px;
+  margin: 40px auto 0;
 }
+
 #keyboard-wrapper .letter {
-  border: 1px solid black;
+  /* border: 1px solid rgba(143, 143, 143, 0.384); */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: large;
+  width: 60px;
+  color: white;
 }
 
 body {
