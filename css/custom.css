@@ -1,0 +1,6 @@
+#keyboard-wrapper {
+  display: flex;
+}
+#keyboard-wrapper .letter {
+  border: 1px solid black;
+}
