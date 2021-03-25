@@ -1,6 +1,6 @@
 class Game {
-  constructor(phraseInfo) {
+  constructor(phraseInfo, username) {
     this.tries = 5
-    this.phrase = new Phrase(phraseInfo)
+    this.phrase = new Phrase(phraseInfo, username)
   }
 }

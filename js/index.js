@@ -1,11 +1,8 @@
 const categoriesWrapper = document.querySelector('.categories-wrapper')
 const playingScreen = document.querySelector('#playing-screen')
 const startScreen = document.querySelector('#start-screen')
-const dropdown = document.querySelector('#categories-dropdown')
-const loadingBar = document.querySelector('.loading-bar')
+const startScreenForm = document.querySelector('#start-screen-form')
 const keyboardWrapper = document.querySelector('#keyboard-wrapper');
-const usernameField = document.querySelector('input[name="username"]')
-const usernameErrorMsg = document.querySelector('.usernameErrorMsg')
 let game;
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
@@ -19,47 +16,34 @@ alphabet.forEach(letter => {
 
 data.getCategories()
 .then(res => res.json())
-.then(categories => addCategorySelect(categories));
+.then(categories => DisplayStartScreenForm(categories));
 
 
-function addCategorySelect(categories) {
+function DisplayStartScreenForm(categories) {
+  const categoriesDropdown = startScreenForm.querySelector('select[name="category-id"]')
+  const loadingBar = document.querySelector('.loading-bar')
   loadingBar.classList.add('is-hidden')
-  categoriesWrapper.classList.remove('is-hidden')
+  startScreenForm.classList.remove('is-hidden')
   const categoryOptions = categories.map(({id, name}) => `<option value=${id}>${name}</option>'`)
-  dropdown.innerHTML += categoryOptions
+  categoriesDropdown.innerHTML += categoryOptions
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//add require username validation
-//diable submit button after first submission
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!
-function startGame() {
-  const categoryId = document.querySelector('#categories-dropdown').value
-  const username = usernameField.value
-  if (username.length > 0) {
-    removeUsernameErrorMsg()
-    data.randomPhraseByCategory(categoryId)
-    .then(res => res.json())
-    .then(phraseInfo => {
-      game = new Game(phraseInfo, username)
-      playingScreen.classList.remove('is-hidden')
-      startScreen.classList.add('is-hidden')
-    });
-  } else {
-    addUsernameErrorMsg()
-  }
+startScreenForm.addEventListener('submit', e => {
+  e.preventDefault()
+  const username = startScreenForm.querySelector('input[name="username"]').value
+  const categoryId = startScreenForm.querySelector('select[name="category-id"]').value
 
-}
+  if (username.length > 0) startGame(username, categoryId);
+})
 
-function addUsernameErrorMsg() {
-  if (!usernameField.classList.contains('is-danger')) {
-    usernameField.classList.add('is-danger')
-    usernameErrorMsg.classList.remove('is-hidden')
-  }
-}
-function removeUsernameErrorMsg() {
-  usernameErrorMsg.classList.add('is-hidden')
-  usernameField.classList.remove('is-danger')
+function startGame(username, categoryId) {
+  data.randomPhraseByCategory(categoryId)
+  .then(res => res.json())
+  .then(phraseInfo => {
+    game = new Game(phraseInfo, username)
+    playingScreen.classList.remove('is-hidden')
+    startScreen.classList.add('is-hidden')
+  });
 }
 
 
