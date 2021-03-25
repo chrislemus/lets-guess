@@ -1,3 +1,13 @@
+const api = "http://localhost:3000"
+const data = {
+  getCategories: () => {
+    return fetch(api + '/categories')
+  },
+  randomPhraseByCategory: (categoryId) => {
+    return fetch(api + `/categories/${categoryId}/phrases?random=true`)
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const keyboardWrapper = document.querySelector('#keyboard-wrapper');
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
@@ -8,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     keyboardWrapper.appendChild(li)
   })
 
-  fetch('http://localhost:3000/categories')
+  data.getCategories()
   .then(res => res.json())
   .then(categories => addCategorySelect(categories));
 });
@@ -24,13 +34,18 @@ function addCategorySelect(categories) {
   
   const categoryOptions = categories.map(({id, name}) => `<option value=${id}>${name}</option>'`)
   dropdown.innerHTML += categoryOptions
-
 }
 
-function getPhraseByCategory() {
+function startGame() {
   const categoryId = document.querySelector('#categories-dropdown').value
-  console.log(dropdown.value)
+  data.randomPhraseByCategory(categoryId)
+  .then(res => res.json())
+  .then(phrase => {
+    
+  });
 }
+
+
 
 
 // window.addEventListener('')
