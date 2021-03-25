@@ -16,14 +16,34 @@
     <script src="./js/index.js"></script>
   </head>
   <body>
-    <div class="container ">
-      <div class=" has-text-centered	">
-        <h1 class="title has-text-white pt-6">Lets Guess</h1>
+    <div id='game-screen-wrapper'>
+      <div id="playing-screen">
+        <div class=" has-text-centered	">
+          <h1 class="title has-text-white pt-6">Lets Guess</h1>
+        </div>
+        <div id="phrase-container"></div>
+        <ul id="keyboard-wrapper">
+        </ul>
       </div>
-      <div id="phrase-container"></div>
-      <ul id="keyboard-wrapper">
-      </ul>
+      <div  id="start-screen">
+        <div class=" has-text-centered	">
+          <h1 class="title has-text-white pt-6 mb-1">Lets Guess</h1>
+          <h2 class="title is-6 has-text-white">word guessing game</h2>
+        </div>
+        <div class="loading-bar ">
+          <p>Loading categories...</p>
+          <progress class="progress is-small is-primary" max="100"></progress>
+        </div>
+       
+  
+        <div class="select is-invisible">
+          <select >
+            <option >Select dropdown</option>
+          </select>
+        </div>
+      </div>
     </div>
+
 
     
     <!--[if lt IE 7]>
