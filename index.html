@@ -18,7 +18,7 @@
   </head>
   <body>
     <div id='game-screen-wrapper'>
-      <div id="playing-screen" class="is-hidden">
+      <div id="playing-screen" class="is-hidden page">
         <div class=" has-text-centered	">
           <h1 class="title has-text-white pt-6">Lets Guess</h1>
         </div>
@@ -27,11 +27,12 @@
         </ul>
       </div>
 
-      <div  id="start-screen">
+      <div  id="start-screen" class="page">
         <div class=" has-text-centered	">
           <h1 class="title has-text-white pt-6 mb-1">Lets Guess</h1>
           <h2 class="title is-6 has-text-white">word guessing game</h2>
         </div>
+
         <div class="loading-bar">
           <p>Loading categories...</p>
           <progress class="progress is-small is-primary " max="100"></progress>
@@ -55,7 +56,7 @@
             </div>
           </div>
   
-          <button class="button" >Submit</button>
+          <button class="button" type="submit">Submit</button>
         </form>
 
 

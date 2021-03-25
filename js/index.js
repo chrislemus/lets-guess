@@ -36,15 +36,26 @@ startScreenForm.addEventListener('submit', e => {
   if (username.length > 0) startGame(username, categoryId);
 })
 
+
 function startGame(username, categoryId) {
   data.randomPhraseByCategory(categoryId)
   .then(res => res.json())
   .then(phraseInfo => {
     game = new Game(phraseInfo, username)
-    playingScreen.classList.remove('is-hidden')
-    startScreen.classList.add('is-hidden')
+    displayPage('playing-screen')
+    displayPhraseBlanks(game,phrase.phrase)
   });
 }
 
+function displayPhraseBlanks(phrase) {
+  
+}
+
+function displayPage(pageID) {
+  const pages = document.querySelectorAll('.page')
+  pages.forEach(page => page.classList.add('is-hidden'))
+  const pageToShow = document.querySelector(`#${pageID}`)
+  pageToShow.classList.remove('is-hidden')
+}
 
 
