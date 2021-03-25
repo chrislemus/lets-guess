@@ -1,5 +1,7 @@
 class Phrase {
-  constructor(phrase) {
-    this.phrase = phrase
+  constructor(phraseInfo) {
+    this.phrase = phraseInfo.phrase
+    this.category = phraseInfo.category
+    this.id = phraseInfo.id
   }
 }

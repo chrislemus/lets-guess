@@ -13,11 +13,12 @@
     <link rel="stylesheet" href="./css/custom.css">
     <script src="./js/game.js"></script>
     <script src="./js/phrase.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/api.js"></script>
+    
   </head>
   <body>
     <div id='game-screen-wrapper'>
-      <div id="playing-screen" >
+      <div id="playing-screen" class="is-hidden">
         <div class=" has-text-centered	">
           <h1 class="title has-text-white pt-6">Lets Guess</h1>
         </div>
@@ -25,6 +26,7 @@
         <ul id="keyboard-wrapper">
         </ul>
       </div>
+
       <div  id="start-screen">
         <div class=" has-text-centered	">
           <h1 class="title has-text-white pt-6 mb-1">Lets Guess</h1>
@@ -32,24 +34,37 @@
         </div>
         <div class="loading-bar">
           <p>Loading categories...</p>
-          <progress class="progress is-small is-primary" max="100"></progress>
+          <progress class="progress is-small is-primary " max="100"></progress>
+        </div>
+
+        <div class="field">
+          <label class="label">Pick a username</label>
+          <div class="control">
+            <input name="username" class="input " type="text" placeholder="Text input">
+          </div>
+          <p class="help is-danger is-hidden usernameErrorMsg">A username is required to proceed</p>
         </div>
        
-  
-        <div class="categories-wrapper select">
-          <select id=categories-dropdown>
-          </select>
-          <button class="button" onclick="startGame()">Button</button>
+        <div class="field categories-wrapper is-hidden">
+          <label class="label">Select phrases category</label>
+          <div class="control">
+            <div class="select">
+              <select id=categories-dropdown>
+              </select>
+            </div>
+          </div>
         </div>
+
+        <button class="button" onclick="startGame()">Submit</button>
+
       </div>
+
     </div>
 
 
     
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    
+    <script src="./js/index.js"></script>
     
   </body>
+  
 </html>
