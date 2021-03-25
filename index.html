@@ -30,16 +30,16 @@
           <h1 class="title has-text-white pt-6 mb-1">Lets Guess</h1>
           <h2 class="title is-6 has-text-white">word guessing game</h2>
         </div>
-        <div class="loading-bar ">
+        <div class="loading-bar">
           <p>Loading categories...</p>
           <progress class="progress is-small is-primary" max="100"></progress>
         </div>
        
   
-        <div class="select is-invisible">
-          <select >
-            <option >Select dropdown</option>
+        <div class="categories-wrapper select is-invisible">
+          <select id=categories-dropdown>
           </select>
+          <button class="button" onclick="getPhraseByCategory()">Button</button>
         </div>
       </div>
     </div>
