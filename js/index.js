@@ -1,14 +1,26 @@
 const phraseContainer = document.querySelector('.phrase-container')
 const startScreenForm = document.querySelector('#start-screen-form')
 const keyboardWrapper = document.querySelector('#keyboard-wrapper');
+const keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
+
+
+function createKeyboard(params) {
+  keyboardLetterGroups.forEach(letterGroup => {
+    const letterKeyElements = letterGroup.map(letter => `<li letter=${letter}>${letter.toUpperCase()}</li>`).join('')
+    keyboardWrapper.innerHTML += ` <ul class="key-letters-group"> ${letterKeyElements} </ul>`
+  })
+}
+createKeyboard()
+
+
+
 let game;
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
-alphabet.forEach(letter => {
-  const li =  document.createElement('li');
-  li.innerHTML = letter.toUpperCase()
-  li.classList.add("letter")
-  keyboardWrapper.appendChild(li)
+keyboardWrapper.addEventListener('click', (e) => {
+  const letterPicked = e.target.getAttribute('letter')
+  if (letterPicked) {
+    
+  }
 })
 
 
@@ -42,6 +54,7 @@ function startGame(username, categoryId) {
     const phrase = new Phrase(phraseInfo)
     game = new Game(phrase, username)
     displayPage('playing-screen')
+    createKeyboard()
     createPhraseBlanks(phrase)
   });
 }

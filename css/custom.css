@@ -17,26 +17,30 @@ body {
 
 #keyboard-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: large;
+  /* flex-wrap: wrap;
   justify-content: center;
   width: 50%;
   min-width: 300px;
-  margin: 40px auto 0;
+  margin: 40px auto 0; */
 }
-
-#keyboard-wrapper .letter {
-  /* border: 1px solid rgba(143, 143, 143, 0.384); */
+#keyboard-wrapper .key-letters-group {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+}
+#keyboard-wrapper .key-letters-group li {
   cursor: pointer;
-  font-weight: bold;
-  font-size: large;
-  width: 60px;
+  width: 30px;
 }
 
 #phrase-container {
   display: flex;
   flex-direction: column;
   font-size: 22px;
-  margin-top: 20px;
+  margin: 20px 0 40px;
 }
 
 .phrase-group {
@@ -48,8 +52,9 @@ body {
 }
 
 .phrase-group li {
-  margin: 0 3px;
+  margin: 3px;
   width: 30px;
+  height: 30px;
   border-bottom: 2px solid rgb(255, 162, 22);
 }
 
