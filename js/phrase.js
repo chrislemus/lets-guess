@@ -1,7 +1,7 @@
 class Phrase {
   constructor(phraseInfo) {
     this.phrase = phraseInfo.phrase
-    this.category = phraseInfo.category
+    this.categoryId = phraseInfo.category_id
     this.id = phraseInfo.id
   }
 }

@@ -1,6 +1,4 @@
-const categoriesWrapper = document.querySelector('.categories-wrapper')
-const playingScreen = document.querySelector('#playing-screen')
-const startScreen = document.querySelector('#start-screen')
+const phraseContainer = document.querySelector('.phrase-container')
 const startScreenForm = document.querySelector('#start-screen-form')
 const keyboardWrapper = document.querySelector('#keyboard-wrapper');
 let game;
@@ -41,14 +39,16 @@ function startGame(username, categoryId) {
   data.randomPhraseByCategory(categoryId)
   .then(res => res.json())
   .then(phraseInfo => {
-    game = new Game(phraseInfo, username)
+    const phrase = new Phrase(phraseInfo)
+    game = new Game(phrase, username)
     displayPage('playing-screen')
-    displayPhraseBlanks(game,phrase.phrase)
+    createPhraseBlanks(phrase)
   });
 }
 
-function displayPhraseBlanks(phrase) {
-  
+function createPhraseBlanks(phrase) {
+  phraseContainer
+  console.log(phrase)
 }
 
 function displayPage(pageID) {

@@ -32,6 +32,27 @@ body {
   width: 60px;
 }
 
+#phrase-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 22px;
+  margin-top: 20px;
+}
+
+.phrase-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 5px;
+}
+
+.phrase-group li {
+  margin: 0 3px;
+  width: 30px;
+  border-bottom: 2px solid rgb(255, 162, 22);
+}
+
 /* #playing-screen {
   display: none;
 } */
