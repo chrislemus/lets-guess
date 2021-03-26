@@ -4,4 +4,9 @@ class Phrase {
     this.categoryId = phraseInfo.category_id
     this.id = phraseInfo.id
   }
+
+  letterCountPerWord() {
+    return this.phrase.split(' ').map(word => word.length)
+  }
+
 }

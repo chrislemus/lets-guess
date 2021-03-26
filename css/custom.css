@@ -43,7 +43,7 @@ body {
   margin: 20px 0 40px;
 }
 
-.phrase-group {
+.word-group {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -51,7 +51,7 @@ body {
   margin-bottom: 5px;
 }
 
-.phrase-group li {
+.word-group li {
   margin: 3px;
   width: 30px;
   height: 30px;

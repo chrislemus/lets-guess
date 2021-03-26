@@ -1,4 +1,4 @@
-const phraseContainer = document.querySelector('.phrase-container')
+const phraseContainer = document.querySelector('#phrase-container')
 const startScreenForm = document.querySelector('#start-screen-form')
 const keyboardWrapper = document.querySelector('#keyboard-wrapper');
 const keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
@@ -60,8 +60,14 @@ function startGame(username, categoryId) {
 }
 
 function createPhraseBlanks(phrase) {
-  phraseContainer
-  console.log(phrase)
+  const letterCountPerWord = phrase.letterCountPerWord()
+  const phraseGroups = letterCountPerWord.map(letterCount => {
+    let wordGroup = '<ul class="word-group">'
+    for(let i=0; i < letterCount; i++) wordGroup += '<li></li>';
+    wordGroup += '</ul>'
+    return wordGroup
+  })
+  phraseContainer.innerHTML += phraseGroups.join('')
 }
 
 function displayPage(pageID) {
