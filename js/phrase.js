@@ -9,4 +9,21 @@ class Phrase {
     return this.phrase.split(' ').map(word => word.length)
   }
 
+  containsLetter(letter) {
+    return this.phrase.includes(letter)
+  }
+
+  indexesOfLetter(letterGuessed) {
+    return this.phrase.split(' ').map(word => {
+      let indexes = []
+      const letters = word.split('')
+      letters.forEach((letter, idx) => {
+        if(letter === letterGuessed) {
+          indexes.push(idx)
+        }
+      })
+      return indexes
+    })
+  }
+
 }

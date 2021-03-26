@@ -10,18 +10,44 @@ function createKeyboard(params) {
     keyboardWrapper.innerHTML += ` <ul class="key-letters-group"> ${letterKeyElements} </ul>`
   })
 }
-createKeyboard()
 
 
 
 let game;
 
 keyboardWrapper.addEventListener('click', (e) => {
-  const letterPicked = e.target.getAttribute('letter')
-  if (letterPicked) {
-    
+  const letter = e.target.getAttribute('letter')
+  const disabled = e.target.getAttribute('disabled')
+  const oldGuest = game.guessedLetters.includes(letter)
+
+  if (letter && !disabled && !oldGuest) {
+    game.newGuess(letter);
+    disableLetterKey(letter)
   }
 })
+
+function displayCorrectGuest( letter) {
+  const wordGroups = document.querySelectorAll('.word-group')
+  const indexesOfLetter = game.phrase.indexesOfLetter(letter)
+  console.log(indexesOfLetter)
+  indexesOfLetter.forEach((indexGroup, idx) => {
+    const letters = wordGroups[idx].querySelectorAll('li')
+    indexGroup.forEach(letterIndex => {
+      letters[letterIndex].innerHTML += `${letter.toUpperCase()}`
+    })
+  })
+}
+
+
+function disableLetterKey(letter) {
+  const letterKeys = document.querySelectorAll('.key-letters-group li[letter]')
+  letterKeys.forEach(letterKey => {
+    const keyWasPicked = letterKey.getAttribute('letter') === letter
+    if(keyWasPicked)  {
+      letterKey.setAttribute('disabled', true)
+    }
+  })
+}
 
 
 data.getCategories()

@@ -35,6 +35,9 @@ body {
   cursor: pointer;
   width: 30px;
 }
+#keyboard-wrapper .key-letters-group li[disabled] {
+  opacity: 0.5;
+}
 
 #phrase-container {
   display: flex;
