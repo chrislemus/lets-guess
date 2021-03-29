@@ -89,11 +89,11 @@ function startGame(username, categoryId) {
     game = new Game(phraseInfo, username)
     displayPage('playing-screen')
     createKeyboard()
-    createPhraseBlanks(game.phrase)
+    createPhraseBlanks()
   });
 }
 
-function createPhraseBlanks(phrase) {
+function createPhraseBlanks() {
   const letterCountPerWord = game.letterCountPerWord()
   const phraseGroups = letterCountPerWord.map(letterCount => {
     let wordGroup = '<ul class="word-group">'

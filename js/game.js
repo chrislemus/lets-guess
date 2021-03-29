@@ -6,6 +6,8 @@ class Game {
     this.phraseId = id
 
 
+    this.lettersToGuess = this.uniquePhraseLetters(phrase)
+    this.lettersGuessed = new Set([])
     this.tries = 5
     this.username = username
     this.guessedLetters = []
@@ -18,6 +20,47 @@ class Game {
     } else {
       this.wrongGuest()
     }
+    this.checkIfWonOrLost()
+  }
+
+  checkIfWonOrLost() {
+    if (this.tries === 0) {
+      window.alert('lost')
+    } else if(this.checkForWin()) {
+      setTimeout(() => {
+        window.alert('WON!')
+      }, 1000);
+    }
+  }
+
+  checkForWin() {
+    const {lettersToGuess, lettersGuessed} = this
+    if (lettersToGuess.size !== lettersGuessed.size) return false;
+    for (const letter of lettersToGuess) {
+      if (!lettersGuessed.has(letter)) return false
+    };
+    return true;
+  }
+
+  containsLetter(letter) {
+    const uniqGuess = !this.lettersGuessed.has(letter)
+    const correctGuess = this.lettersToGuess.has(letter)
+
+    if (correctGuess && uniqGuess) {
+      this.lettersGuessed.add(letter)
+      return true
+    }
+    return false
+  }
+
+  uniquePhraseLetters(phrase) {
+    let uniqLetters = []
+    phrase.split('').forEach(letter => {
+      if(!uniqLetters.includes(letter)) {
+        uniqLetters.push(letter)
+      }
+    })
+    return new Set(uniqLetters);
   }
 
   wrongGuest() {
@@ -27,14 +70,6 @@ class Game {
 
   letterCountPerWord() {
     return this.phrase.split(' ').map(word => word.length)
-  }
-
-  containsLetter(letter) {
-    return this.phrase.includes(letter)
-  }
-
-  containsLetter(letter) {
-    return this.phrase.includes(letter)
   }
 
   indexesOfLetter(letterGuessed) {
