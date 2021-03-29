@@ -20,9 +20,8 @@ class GameController {
     this.keyboardWrapper.addEventListener('click', (e) => {
       const letter = e.target.getAttribute('letter')
       const disabled = e.target.getAttribute('disabled')
-      const oldGuest = this.game.guessedLetters.includes(letter)
     
-      if (letter && !disabled && !oldGuest) {
+      if (letter && !disabled) {
         this.game.newGuess(letter);
         this.disableLetterKey(letter)
         if (this.game.gameOver())  this.displayEndScreen();
@@ -45,10 +44,7 @@ class GameController {
   fetchCategories() {
     data.getCategories()
     .then(res => res.json())
-    .then(categories => {
-      // phraseCategories = categories
-      this.DisplayStartScreenForm(categories)
-    });
+    .then(categories =>  this.addCategoriesDropdownDataToForm(categories) );
   }
 
   displayEndScreen() {
@@ -103,22 +99,12 @@ class GameController {
     heartsContainer.innerHTML = hearts.join('')
   }
   
-  
-  
-  
-  
-  DisplayStartScreenForm(categories) {
-    const categoriesDropdown = this.startScreenForm.querySelector('select[name="category-id"]')
-    const loadingBar = document.querySelector('.loading-bar')
-    loadingBar.classList.add('is-hidden')
-    this.startScreenForm.classList.remove('is-hidden')
-  
-  
-    const categoryOptions = categories.map(({id, name}) => `<option value=${id}>${name}</option>'`)
-    categoriesDropdown.innerHTML += categoryOptions
+  addCategoriesDropdownDataToForm(categories) {
+    const categoriesWrappers = document.querySelectorAll('.categories-wrapper')
+    const categoryOptions = categories.map(({id, name}) => `<option value=${id}>${name}</option>'`).join('')
+    const categoryDropdown = `<div class="select"> <select id=categories-dropdown name="category-id"> ${categoryOptions} </select> </div>` 
+    categoriesWrappers.forEach(categoryWrapper => categoryWrapper.innerHTML = categoryDropdown)
   }
-  
-  
   
   
   startGame(username, categoryId) {

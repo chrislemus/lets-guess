@@ -67,13 +67,11 @@ end screen
 
 
           <form id="end-screen-form" class="" action="" method="get">
-            <div class="field">
+            <div class="field mb-6">
               <label class="label">phrase category</label>
-              <div class="control">
-                <div class="select">
-                  <select id=categories-dropdown name='category-id'>
-                  </select>
-                </div>
+              <div class="control categories-wrapper ">
+                <p>Loading categories...</p>
+                <progress class="progress is-small is-primary " max="100"></progress>
               </div>
             </div>
             <button class="button is-warning" type="submit">Play again</button>
@@ -91,12 +89,9 @@ start screen
           <h2 class="title is-6 has-text-white">word guessing game</h2>
         </div>
 
-        <div class="loading-bar">
-          <p>Loading categories...</p>
-          <progress class="progress is-small is-primary " max="100"></progress>
-        </div>
 
-        <form id="start-screen-form" class="is-hidden" action="" method="get">
+
+        <form id="start-screen-form" action="" method="get">
           <div class="field">
             <label class="label">Enter your name or player name</label>
             <div class="control">
@@ -104,13 +99,11 @@ start screen
             </div>
           </div>
          
-          <div class="field">
+          <div class="field mb-6">
             <label class="label">Select phrases category</label>
-            <div class="control">
-              <div class="select">
-                <select id=categories-dropdown name='category-id'>
-                </select>
-              </div>
+            <div class="control categories-wrapper">
+                <p>Loading categories...</p>
+                <progress class="progress is-small is-primary " max="100"></progress>
             </div>
           </div>
   
