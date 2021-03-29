@@ -15,7 +15,7 @@ class Game {
 
   newGuess(letter) {
     this.guessedLetters.push(letter)
-    if (this.containsLetter(letter)) {
+    if (this.checkPlayerGuess(letter)) {
       displayCorrectGuest(letter)
     } else {
       this.wrongGuest()
@@ -25,24 +25,20 @@ class Game {
 
   checkIfWonOrLost() {
     if (this.tries === 0) {
-      window.alert('lost')
+      displayPage('lost-screen')
     } else if(this.checkForWin()) {
-      setTimeout(() => {
-        window.alert('WON!')
-      }, 1000);
+      displayPage('won-screen')
+        // window.alert('WON!')
     }
   }
 
   checkForWin() {
-    const {lettersToGuess, lettersGuessed} = this
-    if (lettersToGuess.size !== lettersGuessed.size) return false;
-    for (const letter of lettersToGuess) {
-      if (!lettersGuessed.has(letter)) return false
-    };
-    return true;
+    const a = this.lettersToGuess
+    const b = this.lettersGuessed
+    return a.size === b.size && [...a].every(value => b.has(value));
   }
 
-  containsLetter(letter) {
+  checkPlayerGuess(letter) {
     const uniqGuess = !this.lettersGuessed.has(letter)
     const correctGuess = this.lettersToGuess.has(letter)
 
