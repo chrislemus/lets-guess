@@ -1,5 +1,5 @@
 const api = "http://localhost:3000"
-const data = {
+const Data = {
   getCategories: () => {
     return fetch(api + '/categories')
   },

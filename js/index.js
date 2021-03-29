@@ -1,8 +1,3 @@
-// const phraseContainer = document.querySelector('#phrase-container')
-// const startScreenForm = document.querySelector('#start-screen-form')
-// const keyboardWrapper = document.querySelector('#keyboard-wrapper');
-// const keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
-
 class GameController {
 
   constructor() {
@@ -25,7 +20,6 @@ class GameController {
         this.game.newGuess(letter);
         this.disableLetterKey(letter)
         if (this.game.gameOver())  this.displayEndScreen();
-        
       }
     })
   }
@@ -42,7 +36,7 @@ class GameController {
   }
 
   fetchCategories() {
-    data.getCategories()
+    Data.getCategories()
     .then(res => res.json())
     .then(categories =>  this.addCategoriesDropdownDataToForm(categories) );
   }
@@ -108,7 +102,7 @@ class GameController {
   
   
   startGame(username, categoryId) {
-    data.randomPhraseByCategory(categoryId)
+    Data.randomPhraseByCategory(categoryId)
     .then(res => res.json())
     .then(phraseInfo => {
       this.game = new Game(phraseInfo, username)
