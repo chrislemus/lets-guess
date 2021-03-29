@@ -5,7 +5,7 @@ class Game {
     this.phraseCategoryId = category_id
     this.phraseId = id
 
-
+    this.results = null
     this.lettersToGuess = this.uniquePhraseLetters(phrase)
     this.lettersGuessed = new Set([])
     this.tries = 5
@@ -25,11 +25,14 @@ class Game {
 
   checkIfWonOrLost() {
     if (this.tries === 0) {
-      displayPage('lost-screen')
+      this.results = 'lost'
     } else if(this.checkForWin()) {
-      displayPage('won-screen')
-        // window.alert('WON!')
+      this.results = 'won'
     }
+  }
+
+  gameOver() {
+    return !!this.results
   }
 
   checkForWin() {

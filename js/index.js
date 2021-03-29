@@ -23,8 +23,14 @@ keyboardWrapper.addEventListener('click', (e) => {
   if (letter && !disabled && !oldGuest) {
     game.newGuess(letter);
     disableLetterKey(letter)
+    if (game.gameOver())  displayEndScreen();
+    
   }
 })
+
+function displayEndScreen() {
+  displayPage('game-end-screen')
+}
 
 function displayCorrectGuest( letter) {
   const wordGroups = document.querySelectorAll('.word-group')
