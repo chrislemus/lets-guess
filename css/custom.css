@@ -26,6 +26,14 @@ body {
   min-width: 300px;
   margin: 40px auto 0; */
 }
+
+.hearts {
+  color: rgb(255, 68, 68);
+  display: flex;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
 #keyboard-wrapper .key-letters-group {
   display: flex;
   justify-content: center;

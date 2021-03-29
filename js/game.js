@@ -10,7 +10,14 @@ class Game {
     this.guessedLetters.push(letter)
     if (this.phrase.containsLetter(letter)) {
       displayCorrectGuest(letter)
-    } 
+    } else {
+      this.wrongGuest()
+    }
+  }
+
+  wrongGuest() {
+    this.tries -= 1
+    updateUIHearts()
   }
 
 
