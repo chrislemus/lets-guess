@@ -28,7 +28,7 @@ keyboardWrapper.addEventListener('click', (e) => {
 
 function displayCorrectGuest( letter) {
   const wordGroups = document.querySelectorAll('.word-group')
-  const indexesOfLetter = game.phrase.indexesOfLetter(letter)
+  const indexesOfLetter = game.indexesOfLetter(letter)
   console.log(indexesOfLetter)
   indexesOfLetter.forEach((indexGroup, idx) => {
     const letters = wordGroups[idx].querySelectorAll('li')
@@ -86,16 +86,15 @@ function startGame(username, categoryId) {
   data.randomPhraseByCategory(categoryId)
   .then(res => res.json())
   .then(phraseInfo => {
-    const phrase = new Phrase(phraseInfo)
-    game = new Game(phrase, username)
+    game = new Game(phraseInfo, username)
     displayPage('playing-screen')
     createKeyboard()
-    createPhraseBlanks(phrase)
+    createPhraseBlanks(game.phrase)
   });
 }
 
 function createPhraseBlanks(phrase) {
-  const letterCountPerWord = phrase.letterCountPerWord()
+  const letterCountPerWord = game.letterCountPerWord()
   const phraseGroups = letterCountPerWord.map(letterCount => {
     let wordGroup = '<ul class="word-group">'
     for(let i=0; i < letterCount; i++) wordGroup += '<li></li>';
