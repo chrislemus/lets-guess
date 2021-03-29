@@ -16,7 +16,7 @@ class Game {
   newGuess(letter) {
     this.guessedLetters.push(letter)
     if (this.checkPlayerGuess(letter)) {
-      gameSession.displayCorrectGuest(letter)
+      gameController.displayCorrectGuest(letter)
     } else {
       this.wrongGuest()
     }
@@ -64,7 +64,7 @@ class Game {
 
   wrongGuest() {
     this.tries -= 1
-    gameSession.updateUIHearts()
+    gameController.updateUIHearts()
   }
 
   letterCountPerWord() {

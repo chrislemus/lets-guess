@@ -1,13 +1,45 @@
-const phraseContainer = document.querySelector('#phrase-container')
-const startScreenForm = document.querySelector('#start-screen-form')
-const keyboardWrapper = document.querySelector('#keyboard-wrapper');
-const keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
+// const phraseContainer = document.querySelector('#phrase-container')
+// const startScreenForm = document.querySelector('#start-screen-form')
+// const keyboardWrapper = document.querySelector('#keyboard-wrapper');
+// const keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
 
 class GameController {
 
   constructor() {
     this.game = null
+    this.phraseContainer = document.querySelector('#phrase-container')
+    this.startScreenForm = document.querySelector('#start-screen-form')
+    this.keyboardWrapper = document.querySelector('#keyboard-wrapper');
+    this.keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
     this.fetchCategories()
+    this.keyboardEventListener()
+    this.startScreenEventListener()
+  }
+
+  keyboardEventListener() {
+    this.keyboardWrapper.addEventListener('click', (e) => {
+      const letter = e.target.getAttribute('letter')
+      const disabled = e.target.getAttribute('disabled')
+      const oldGuest = this.game.guessedLetters.includes(letter)
+    
+      if (letter && !disabled && !oldGuest) {
+        this.game.newGuess(letter);
+        this.disableLetterKey(letter)
+        if (this.game.gameOver())  this.displayEndScreen();
+        
+      }
+    })
+  }
+
+  startScreenEventListener() {
+    this.startScreenForm.addEventListener('submit', e => {
+      e.preventDefault()
+      const username = this.startScreenForm.querySelector('input[name="username"]').value
+      const categoryId = this.startScreenForm.querySelector('select[name="category-id"]').value
+    
+      if (username.length > 0) this.startGame(username, categoryId);
+    })
+    
   }
 
   fetchCategories() {
@@ -24,24 +56,24 @@ class GameController {
     const loseMessage = document.querySelector('.game-result-message-lose')
     this.displayPage('game-end-screen')
     
-    if (game.results === 'won') {
+    if (this.game.results === 'won') {
       wonMessage.classList.remove('is-hidden')
-    } else if(game.results === 'lose') {
+    } else if(this.game.results === 'lose') {
       loseMessage.classList.remove('is-hidden')
     }
   }
   
   
   createKeyboard() {
-    keyboardLetterGroups.forEach(letterGroup => {
+    this.keyboardLetterGroups.forEach(letterGroup => {
       const letterKeyElements = letterGroup.map(letter => `<li letter=${letter}>${letter.toUpperCase()}</li>`).join('')
-      keyboardWrapper.innerHTML += ` <ul class="key-letters-group"> ${letterKeyElements} </ul>`
+      this.keyboardWrapper.innerHTML += ` <ul class="key-letters-group"> ${letterKeyElements} </ul>`
     })
   }
   
   displayCorrectGuest( letter) {
     const wordGroups = document.querySelectorAll('.word-group')
-    const indexesOfLetter = game.indexesOfLetter(letter)
+    const indexesOfLetter = this.game.indexesOfLetter(letter)
     console.log(indexesOfLetter)
     indexesOfLetter.forEach((indexGroup, idx) => {
       const letters = wordGroups[idx].querySelectorAll('li')
@@ -65,7 +97,7 @@ class GameController {
   updateUIHearts() {
     const heartsContainer = document.querySelector('.hearts')
     const hearts = []
-    while (hearts.length < game.tries) {
+    while (hearts.length < this.game.tries) {
       hearts.push('<li>♥</li>')
     }
     heartsContainer.innerHTML = hearts.join('')
@@ -76,10 +108,10 @@ class GameController {
   
   
   DisplayStartScreenForm(categories) {
-    const categoriesDropdown = startScreenForm.querySelector('select[name="category-id"]')
+    const categoriesDropdown = this.startScreenForm.querySelector('select[name="category-id"]')
     const loadingBar = document.querySelector('.loading-bar')
     loadingBar.classList.add('is-hidden')
-    startScreenForm.classList.remove('is-hidden')
+    this.startScreenForm.classList.remove('is-hidden')
   
   
     const categoryOptions = categories.map(({id, name}) => `<option value=${id}>${name}</option>'`)
@@ -101,14 +133,14 @@ class GameController {
   }
   
   createPhraseBlanks() {
-    const letterCountPerWord = game.letterCountPerWord()
+    const letterCountPerWord = this.game.letterCountPerWord()
     const phraseGroups = letterCountPerWord.map(letterCount => {
       let wordGroup = '<ul class="word-group">'
       for(let i=0; i < letterCount; i++) wordGroup += '<li></li>';
       wordGroup += '</ul>'
       return wordGroup
     })
-    phraseContainer.innerHTML += phraseGroups.join('')
+    this.phraseContainer.innerHTML += phraseGroups.join('')
   }
   
   displayPage(pageID) {
@@ -118,42 +150,9 @@ class GameController {
     pageToShow.classList.remove('is-hidden')
   }
 }
-// ==============================
-//          game boots
-// ==============================
 
 
-const gameSession = new GameController()
-
-
-
-keyboardWrapper.addEventListener('click', (e) => {
-  const letter = e.target.getAttribute('letter')
-  const disabled = e.target.getAttribute('disabled')
-  const oldGuest = gameSession.game.guessedLetters.includes(letter)
-
-  if (letter && !disabled && !oldGuest) {
-    gameSession.game.newGuess(letter);
-    gameSession.disableLetterKey(letter)
-    if (gameSession.game.gameOver())  gameSession.displayEndScreen();
-    
-  }
-})
-
-startScreenForm.addEventListener('submit', e => {
-  e.preventDefault()
-  const username = startScreenForm.querySelector('input[name="username"]').value
-  const categoryId = startScreenForm.querySelector('select[name="category-id"]').value
-
-  if (username.length > 0) gameSession.startGame(username, categoryId);
-})
-
-
-// ==============================
-//          Functions
-// ==============================
-
-
+const gameController = new GameController()
 
 
 
