@@ -72,10 +72,19 @@ body {
 /* #playing-screen {
   display: none;
 } */
+.time-stats p:nth-child(even) {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
 .loading-bar {
   margin: 40px 0;
 }
 .loading-bar p {
   margin: 0 0 10px;
+}
+
+#game-end-screen .phrase-to-guess {
+  padding-bottom: 5px;
+  border-bottom: 3px solid rgb(255, 187, 59);
 }

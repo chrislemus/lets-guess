@@ -16,16 +16,16 @@ class Game {
   newGuess(letter) {
     this.guessedLetters.push(letter)
     if (this.checkPlayerGuess(letter)) {
-      displayCorrectGuest(letter)
+      gameSession.displayCorrectGuest(letter)
     } else {
       this.wrongGuest()
     }
-    this.checkIfWonOrLost()
+    this.checkIfWonOrLose()
   }
 
-  checkIfWonOrLost() {
+  checkIfWonOrLose() {
     if (this.tries === 0) {
-      this.results = 'lost'
+      this.results = 'lose'
     } else if(this.checkForWin()) {
       this.results = 'won'
     }
@@ -64,7 +64,7 @@ class Game {
 
   wrongGuest() {
     this.tries -= 1
-    updateUIHearts()
+    gameSession.updateUIHearts()
   }
 
   letterCountPerWord() {
