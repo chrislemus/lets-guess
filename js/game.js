@@ -17,17 +17,15 @@ class Game {
     if (correctGuess) {
       this.GuessedLetters.add(letter)
       GuessResult =  'correct'
-      // gameController.displayCorrectGuest(letter)
     } else {
-      // this.wrongGuest()
       this.tries -= 1
       GuessResult = 'wrong'
     }
-    this.checkIfWonOrLose()
+    this.updateGameResults()
     return GuessResult
   }
 
-  checkIfWonOrLose() {
+  updateGameResults() {
     if (this.tries === 0) {
       this.results = 'lose'
     } else if(this.checkForWin()) {
@@ -44,11 +42,6 @@ class Game {
     const b = this.GuessedLetters
     return a.size === b.size && [...a].every(value => b.has(value));
   }
-
-  // wrongGuest() {
-    
-  //   gameController.updateUIHearts()
-  // }
 
   letterCountPerWord() {
     return this.phrase.split(' ').map(word => word.length)

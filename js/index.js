@@ -5,7 +5,7 @@ class GameController {
     this.phraseContainer = document.querySelector('#phrase-container')
     this.startScreenForm = document.querySelector('#start-screen-form')
     this.keyboardWrapper = document.querySelector('#keyboard-wrapper');
-    this.keyboardLetterGroups = [['a', 'b', 'c', 'd', 'e'], ['f', 'g', 'h', 'i', 'j', 'k'],['l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
+    this.keyboardLetterGroups = [['a', 'b', 'c', 'd'], ['e','f', 'g', 'h', 'i', 'j'],['k','l', 'm', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
     this.fetchCategories()
     this.keyboardEventListener()
     this.startScreenEventListener()
@@ -15,13 +15,21 @@ class GameController {
     this.keyboardWrapper.addEventListener('click', (e) => {
       const letter = e.target.getAttribute('letter')
       const disabled = e.target.getAttribute('disabled')
-    
       if (letter && !disabled) {
-        this.game.newGuess(letter);
         this.disableLetterKey(letter)
-        if (this.game.gameOver())  this.displayEndScreen();
+        this.handleNewGuess(letter)
       }
     })
+  }
+
+  handleNewGuess(letter) {
+    const guestResult = this.game.newGuess(letter);
+    if (guestResult === 'correct') {
+      this.displayCorrectGuest(letter)
+    } else {
+      this.updateUIHearts()
+    }
+    if (this.game.gameOver())  this.displayEndScreen();
   }
 
   startScreenEventListener() {
@@ -64,11 +72,10 @@ class GameController {
   displayCorrectGuest( letter) {
     const wordGroups = document.querySelectorAll('.word-group')
     const indexesOfLetter = this.game.indexesOfLetter(letter)
-    console.log(indexesOfLetter)
     indexesOfLetter.forEach((indexGroup, idx) => {
       const letters = wordGroups[idx].querySelectorAll('li')
       indexGroup.forEach(letterIndex => {
-        letters[letterIndex].innerHTML += `${letter.toUpperCase()}`
+        letters[letterIndex].innerHTML = `${letter.toUpperCase()}`
       })
     })
   }
@@ -78,9 +85,7 @@ class GameController {
     const letterKeys = document.querySelectorAll('.key-letters-group li[letter]')
     letterKeys.forEach(letterKey => {
       const keyWasPicked = letterKey.getAttribute('letter') === letter
-      if(keyWasPicked)  {
-        letterKey.setAttribute('disabled', true)
-      }
+      if(keyWasPicked) letterKey.setAttribute('disabled', true);
     })
   }
   
