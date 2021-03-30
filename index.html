@@ -42,7 +42,7 @@ playing screen
 end screen
       -->
       <div id="game-end-screen" class="page is-hidden">
-        <span class="phrase-to-guess">FOOTBALL</span>
+        
 
         <div class="title pt-6 has-text-white mb-1">
           <h1 won class="game-result-message is-hidden">Congrats!</h1>
@@ -50,19 +50,20 @@ end screen
         </div>
 
         <div class="box">
+          <span class="phrase-to-guess">FOOTBALL</span>
           <div class="">
             <div class="time-stats">
             </div>  
           </div>
-          <form id="end-screen-form" class="" action="" method="get">
-            <div class="field mb-6">
+          <form id="end-screen-form" class="pb-3" action="" method="get">
+            <div class="field mt-6">
               <label class="label">phrase category</label>
               <div class="control categories-wrapper ">
                 <p>Loading categories...</p>
                 <progress class="progress is-small is-primary " max="100"></progress>
               </div>
             </div>
-            <button class="button is-warning" type="submit">Play again</button>
+            <button class="secondary-button" type="submit">Play again</button>
           </form>
         </div>
          
@@ -72,30 +73,30 @@ end screen
 start screen
       -->
       <div  id="start-screen" class="page ">
-        <div class=" has-text-centered	">
-          <h1 class="title has-text-white pt-6 mb-1">Lets Guess</h1>
-          <h2 class="title is-6 has-text-white">word guessing game</h2>
+        <div class=" has-text-centered mb-6	">
+          <h1 class="title has-text-white pt-6 ">Lets Guess</h1>
+          <h2 class="subtitle is-6 has-text-white">word guessing game</h2>
         </div>
 
 
 
-        <form id="start-screen-form" action="" method="get">
+        <form id="start-screen-form" class='box' action="" method="get">
           <div class="field">
-            <label class="label">Enter your name or player name</label>
+            <label class="label ">Enter your name or player name</label>
             <div class="control">
               <input name="username" class="input " type="text" placeholder="Webmaster Chris" required>
             </div>
           </div>
          
-          <div class="field mb-6">
-            <label class="label">Select phrases category</label>
+          <div class="field">
+            <label class="label ">Select phrases category</label>
             <div class="control categories-wrapper">
                 <p>Loading categories...</p>
                 <progress class="progress is-small is-primary " max="100"></progress>
             </div>
           </div>
   
-          <button class="button" type="submit">Submit</button>
+          <button class="secondary-button " type="submit">Start Game</button>
         </form>
 
 

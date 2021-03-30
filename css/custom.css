@@ -14,17 +14,19 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
+#start-screen input[name='username'] {
+  max-width: 200px;
+}
+
+/* .categories-wrapper #categories-dropdown {
+  background: red;
+} */
 
 #keyboard-wrapper {
   display: flex;
   flex-direction: column;
   font-weight: bold;
   font-size: large;
-  /* flex-wrap: wrap;
-  justify-content: center;
-  width: 50%;
-  min-width: 300px;
-  margin: 40px auto 0; */
 }
 
 .hearts {
@@ -73,12 +75,20 @@ body {
   border-bottom: 2px solid rgb(255, 162, 22);
 }
 
-/* #playing-screen {
-  display: none;
-} */
 .time-stats p:nth-child(even) {
   margin-bottom: 5px;
   font-weight: bold;
+}
+.secondary-button {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 8px;
+  background: rgb(255, 188, 63);
+  font-weight: bold;
+  color: white;
+  font-size: 20px;
+  border-radius: 5px;
 }
 
 .loading-bar {
@@ -89,6 +99,8 @@ body {
 }
 
 #game-end-screen .phrase-to-guess {
+  display: block;
   padding-bottom: 5px;
+  margin-bottom: 22px;
   border-bottom: 3px solid rgb(255, 187, 59);
 }

@@ -89,7 +89,7 @@ class GameViews {
     if (results === 'won') {
       const phraseTimeStatsWrapper = document.querySelector('.time-stats')
       const gameDuration = game.gameDuration()
-      const recordView = (title, record) => ` <p>${title}</p> <p>${record} seconds</p>`;
+      const recordView = (title, record) => ` <p>${title}</p> <p>${record} secs</p>`;
       
       phraseTimeStatsWrapper.innerHTML = recordView('your time', gameDuration) 
       Data.getPhraseGameRecords(phraseId)
