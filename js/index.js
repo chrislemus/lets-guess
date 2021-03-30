@@ -35,11 +35,10 @@ class GameController {
 
   handleNewGuess(letter) {
     const guestResult = this.game.newGuess(letter);
+    this.updateUIHearts()
     if (guestResult === 'correct') {
       this.displayCorrectGuest(letter)
-    } else {
-      this.updateUIHearts()
-    }
+    } 
     if (this.game.gameOver())  this.displayEndScreen();
   }
 

@@ -5,7 +5,7 @@ class Game {
     this.phraseCategoryId = category_id
     this.phraseId = id
     this.results = null
-    this.lettersToGuess = new Set(phrase.split('')) 
+    this.lettersToGuess = new Set(phrase.split('').filter(letter => letter !== ' ')) 
     this.GuessedLetters = new Set([])
     this.tries = 5
     this.username = username
@@ -13,6 +13,7 @@ class Game {
 
   newGuess(letter) {
     const correctGuess = this.lettersToGuess.has(letter)
+    console.log(this.lettersToGuess)
     let GuessResult;
     if (correctGuess) {
       this.GuessedLetters.add(letter)
