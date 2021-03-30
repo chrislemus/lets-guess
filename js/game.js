@@ -5,7 +5,8 @@ class Game {
     this.phraseCategoryId = category_id
     this.phraseId = id
     this.results = null
-    this.lettersToGuess = new Set(phrase.split('').filter(letter => letter !== ' ')) 
+    const phraseLetters = phrase.split('').filter(letter => letter !== ' ')
+    this.lettersToGuess = new Set(phraseLetters) 
     this.GuessedLetters = new Set([])
     this.tries = 5
     this.username = username
@@ -13,7 +14,6 @@ class Game {
 
   newGuess(letter) {
     const correctGuess = this.lettersToGuess.has(letter)
-    console.log(this.lettersToGuess)
     let GuessResult;
     if (correctGuess) {
       this.GuessedLetters.add(letter)
@@ -48,16 +48,16 @@ class Game {
     return this.phrase.split(' ').map(word => word.length)
   }
 
-  indexesOfLetter(letterGuessed) {
-    return this.phrase.split(' ').map(word => {
-      let indexes = []
-      const letters = word.split('')
-      letters.forEach((letter, idx) => {
-        if(letter === letterGuessed) indexes.push(idx);
-      })
-      return indexes
-    })
-  }
+  // indexesOfLetter(letterGuessed) {
+  //   return this.phrase.split(' ').map(word => {
+  //     let indexes = []
+  //     const letters = word.split('')
+  //     letters.forEach((letter, idx) => {
+  //       if(letter === letterGuessed) indexes.push(idx);
+  //     })
+  //     return indexes
+  //   })
+  // }
 
 
 }
