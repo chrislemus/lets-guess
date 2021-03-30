@@ -57,6 +57,7 @@ class GameController {
     };
   }
 
+
   uploadGameRecord() {
     if (this.game.results === 'won') {
       const {username} = this;
@@ -64,8 +65,6 @@ class GameController {
       const {phraseId} = this.game
       Data.uploadNewGameRecord(username, elapsedTime, phraseId)
       .then(() => this.gameViews.showPhraseRecords(this.game))
-    } else {
-      this.gameViews.showPhraseRecords(this.game)
     }
   }
 
@@ -104,6 +103,7 @@ class GameController {
       this.game = new Game(phraseInfo, this.username)
       this.gameViews.displayPage('playing-screen')
       this.createKeyboards()
+      this.gameViews.clearPhraseRecords()
       this.gameViews.createPhraseBlanks(this.game.phrase)
       this.gameViews.updateUIHearts(this.game.tries)
       this.displayTimer()

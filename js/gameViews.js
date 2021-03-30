@@ -70,7 +70,6 @@ class GameViews {
 
     this.displayPage('game-end-screen')
     const gameResultsMessage = document.querySelectorAll('.game-result-message')
-    console.log(gameResultsMessage)
     gameResultsMessage.forEach(message => {
       if (message.hasAttribute(results)) {
         message.classList.remove('is-hidden')
@@ -79,20 +78,16 @@ class GameViews {
       }
     }) 
     this.displayPage('game-end-screen')
-    
-    // if (results === 'won') {
-      
-    //   wonMessage.classList.remove('is-hidden')
-    // } else if(results === 'lose') {
-    //   loseMessage.classList.remove('is-hidden')
-    // }
   }
-  showPhraseRecords(game) {
-    const {phraseId, results} = game;
+  clearPhraseRecords() {
     const phraseTimeStatsWrapper = document.querySelector('.time-stats')
     phraseTimeStatsWrapper.innerHTML = ''
+  }
+
+  showPhraseRecords(game) {
+    const {phraseId, results} = game;
     if (results === 'won') {
-      
+      const phraseTimeStatsWrapper = document.querySelector('.time-stats')
       const gameDuration = game.gameDuration()
       const recordView = (title, record) => ` <p>${title}</p> <p>${record} seconds</p>`;
       
