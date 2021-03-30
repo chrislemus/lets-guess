@@ -1,3 +1,22 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url(/assets/AbsoluteNeonScript.ttf);
+}
+.game-result-message {
+  font-family: myFirstFont;
+  display: block;
+  margin-bottom: 50px;
+  font-size: 100px;
+  color: rgb(35, 212, 0);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 10px #11ff9c,
+    0 0 20px #11ff9c81, 0 0 20px #11ff9c9d, 0 0 20px #11ff9c9a;
+}
+.game-result-message[lose] {
+  color: rgb(245, 67, 12);
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 10px #ff1177,
+    0 0 20px #ff6811, 0 0 20px #ff6811, 0 0 20px #ff6811;
+}
+
 body {
   margin: 0;
   background: rgb(140, 52, 255);
@@ -21,6 +40,11 @@ body {
 /* .categories-wrapper #categories-dropdown {
   background: red;
 } */
+
+.categories-wrapper progress {
+  margin: 0 auto;
+  max-width: 100px;
+}
 
 #keyboard-wrapper {
   display: flex;
