@@ -30,7 +30,6 @@ class GameController {
     const gameTimer = setInterval(() => {
       const gameDuration = this.game.gameDuration()
       this.gameViews.updateGameTimer(gameDuration)
-      console.log(gameDuration)
       if (this.game.gameOver()) clearInterval(gameTimer);
     }, 100);
   }
@@ -52,7 +51,19 @@ class GameController {
     if (guestResult === 'correct') {
       this.gameViews.displayCorrectGuest(letter, this.game.phrase)
     } 
-    if (this.game.gameOver()) this.gameViews.displayGameOver();
+    if (this.game.gameOver()) {
+      this.gameViews.displayGameOver()
+      this.uploadGameRecord()
+    };
+  }
+
+  uploadGameRecord() {
+    if (this.game.results === 'won') {
+      const {username} = this;
+      const elapsedTime = this.game.gameDuration();
+      const {phraseId} = this.game
+      Data.uploadNewGameRecord(username, elapsedTime, phraseId)
+    }
   }
 
   gameOverEventListener() {
