@@ -5,30 +5,34 @@ class GameController {
     this.gameViews = new GameViews()
     this.username = ''
     this.fetchCategories()
-    this.keyboardEventListener()
     this.startScreenEventListener()
-    this.endGameEventListener()
+    this.gameOverEventListener()
   }
 
   keyboardEventListener() {
-    const keyboardWrapper = document.querySelector('#keyboard-wrapper');
-    keyboardWrapper.addEventListener('click', (e) => {
-      const letter = e.target.getAttribute('letter')
-      const disabled = e.target.getAttribute('disabled')
-      if (letter && !disabled) {
-        e.target.setAttribute('disabled', true);
-        this.handleNewGuess(letter)
-      }
-    })
+    const keyboardButtons = document.querySelectorAll('li[letter]');
+    keyboardButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const btn = e.target
+        const buttonNotDisabled = !btn.getAttribute('disabled')
+        if (buttonNotDisabled) {
+          btn.setAttribute('disabled', true);
+          const letterClicked = btn.getAttribute('letter')
+          this.handleNewGuess(letterClicked)
+        }
+      })
+    });
   }
 
-  endGameEventListener() {
-    const endScreenForm = document.querySelector('#end-screen-form')
-    endScreenForm.addEventListener('submit', e => {
-      e.preventDefault()
-      const categoryId = endScreenForm.querySelector('select[name="category-id"]').value
-      this.startGame(categoryId)
-    })
+  createKeyboards() {
+    const keyboardButtons = document.querySelectorAll('li[letter]');
+    const keyboardExist = keyboardButtons.length === 26
+    if (keyboardExist) {
+      keyboardButtons.forEach(button => button.removeAttribute('disabled'))
+    } else {
+      this.gameViews.createKeyboard()
+      this.keyboardEventListener()
+    }
   }
 
   handleNewGuess(letter) {
@@ -37,48 +41,46 @@ class GameController {
     if (guestResult === 'correct') {
       this.gameViews.displayCorrectGuest(letter, this.game.phrase)
     } 
-    if (this.game.gameOver())  this.handleGameOver();
+    if (this.game.gameOver())  this.gameViews.displayGameOver();
+  }
+
+  gameOverEventListener() {
+    const endScreenForm = document.querySelector('#end-screen-form')
+    endScreenForm.addEventListener('submit', e => {
+      e.preventDefault()
+      const categoryId = endScreenForm.querySelector('select[name="category-id"]').value
+      this.startGame(categoryId)
+    })
   }
 
   startScreenEventListener() {
     const startScreenForm = document.querySelector('#start-screen-form')
     startScreenForm.addEventListener('submit', e => {
       e.preventDefault()
-      this.username = startScreenForm.querySelector('input[name="username"]').value
-      const categoryId = startScreenForm.querySelector('select[name="category-id"]').value
-    
-      if (this.username.length > 0) this.startGame(categoryId);
+      const username = startScreenForm.querySelector('input[name="username"]').value
+      if (username.length > 0) {
+        this.username = username
+        const categoryId = startScreenForm.querySelector('select[name="category-id"]').value
+        this.startGame(categoryId);
+      }
     })
-    
   }
+
 
   fetchCategories() {
     Data.getCategories()
     .then(res => res.json())
     .then(categories =>  this.gameViews.addCategoriesDropdownData(categories) );
   }
-
-  handleGameOver() {
-    const wonMessage = document.querySelector('.game-result-message-won')
-    const loseMessage = document.querySelector('.game-result-message-lose')
-    this.gameViews.displayPage('game-end-screen')
-    
-    if (this.game.results === 'won') {
-      wonMessage.classList.remove('is-hidden')
-    } else if(this.game.results === 'lose') {
-      loseMessage.classList.remove('is-hidden')
-    }
-  }
   
-
   startGame(categoryId) {
     Data.randomPhraseByCategory(categoryId)
     .then(res => res.json())
     .then(phraseInfo => {
       this.game = new Game(phraseInfo, this.username)
       this.gameViews.displayPage('playing-screen')
-      this.gameViews.createKeyboard()
-      this.gameViews.createPhraseBlanks(this.game)
+      this.createKeyboards()
+      this.gameViews.createPhraseBlanks(this.game.phrase)
     });
   }
 }

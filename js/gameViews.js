@@ -11,10 +11,10 @@ class GameViews {
     })
   }
 
-  createPhraseBlanks(game) {
+  createPhraseBlanks(phrase) {
     const phraseContainer = document.querySelector('#phrase-container')
     phraseContainer.innerHTML = ''
-    const letterCountPerWord = game.letterCountPerWord()
+    const letterCountPerWord = phrase.split(' ').map(word => word.length)
     const phraseGroups = letterCountPerWord.map(letterCount => {
       let wordGroup = '<ul class="word-group">'
       for(let i=0; i < letterCount; i++) wordGroup += '<li></li>';
@@ -49,6 +49,18 @@ class GameViews {
     pages.forEach(page => page.classList.add('is-hidden'))
     const pageToShow = document.querySelector(`#${pageID}`)
     pageToShow.classList.remove('is-hidden')
+  }
+
+  displayGameOver(gameResults) {
+    const wonMessage = document.querySelector('.game-result-message-won')
+    const loseMessage = document.querySelector('.game-result-message-lose')
+    this.displayPage('game-end-screen')
+    
+    if (gameResults === 'won') {
+      wonMessage.classList.remove('is-hidden')
+    } else if(gameResults === 'lose') {
+      loseMessage.classList.remove('is-hidden')
+    }
   }
 
   updateUIHearts(tries) {
