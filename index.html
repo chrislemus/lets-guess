@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/bulma.css">
     <link rel="stylesheet" href="./css/custom.css">
-    <script src="./js/game.js"></script>
+    <script src="./js/gameSession.js"></script>
     <script src="./js/gameViews.js"></script>
     <script src="./js/api.js"></script>
     
@@ -34,7 +34,42 @@ playing screen
         </div>
 
          
-        <div id="keyboard-wrapper"> </div>
+        <div id="keyboard-wrapper">
+          <ul class="key-letters-group"> 
+            <li letter="a">A</li>
+            <li letter="b">B</li>
+            <li letter="c">C</li>
+            <li letter="d">D</li>
+          </ul>
+          <ul class="key-letters-group">
+            <li letter="f">F</li>
+            <li letter="g">G</li>
+            <li letter="h">H</li>
+            <li letter="i">I</li>
+            <li letter="j">J</li>
+          </ul>
+          <ul class="key-letters-group"> 
+            <li letter="k">K</li>
+            <li letter="l">L</li>
+            <li letter="m">M</li>
+            <li letter="n">N</li>
+            <li letter="o">O</li>
+            <li letter="p">P</li>
+          </ul>
+          <ul class="key-letters-group">
+            <li letter="q">Q</li>
+            <li letter="r">R</li>
+            <li letter="s">S</li>
+            <li letter="t">T</li>
+            <li letter="u">U</li>
+            <li letter="v">V</li>
+          </ul> <ul class="key-letters-group">
+            <li letter="w">W</li>
+            <li letter="x">X</li>
+            <li letter="y">Y</li>
+            <li letter="z">Z</li>
+          </ul>
+        </div>
       </div>
       <!--  
 ========================================
@@ -49,7 +84,7 @@ end screen
         </div>
 
         <div class="box">
-          <span class="phrase-to-guess">FOOTBALL</span>
+          <span class="phrase-to-guess"></span>
           <div class="">
             <div class="time-stats">
             </div>  
@@ -105,7 +140,7 @@ start screen
 
 
     
-    <script src="./js/index.js"></script>
+    <script src="./js/gameController.js"></script>
   </body>
   
 </html>

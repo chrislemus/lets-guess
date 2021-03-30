@@ -1,15 +1,5 @@
 class GameViews {
 
-    
-  createKeyboard() {
-    const keyboardLetterGroups = [['a', 'b', 'c', 'd'], ['e','f', 'g', 'h', 'i', 'j'],['k','l', 'm','n', 'o', 'p'],['q', 'r', 's', 't', 'u', 'v'], ['w', 'x', 'y', 'z']]
-    const keyboardWrapper = document.querySelector('#keyboard-wrapper');
-    keyboardWrapper.innerHTML = ''
-    keyboardLetterGroups.forEach(letterGroup => {
-      const letterKeyElements = letterGroup.map(letter => `<li letter=${letter}>${letter.toUpperCase()}</li>`).join('')
-      keyboardWrapper.innerHTML += ` <ul class="key-letters-group"> ${letterKeyElements} </ul>`
-    })
-  }
 
   updateGameTimer(delta) {
     let seconds = Math.floor(delta % 60)
@@ -64,12 +54,11 @@ class GameViews {
     pageToShow.classList.remove('is-hidden')
   }
 
-  displayGameOver({results}) {
-    const wonMessage = document.querySelector('.game-result-message-won')
-    const loseMessage = document.querySelector('.game-result-message-lose')
-
+  displayGameOver({results, phrase}) {
     this.displayPage('game-end-screen')
     const gameResultsMessage = document.querySelectorAll('.game-result-message')
+    const phraseToGuess = document.querySelector('.phrase-to-guess')
+    phraseToGuess.innerHTML = phrase.toUpperCase()
     gameResultsMessage.forEach(message => {
       if (message.hasAttribute(results)) {
         message.classList.remove('is-hidden')
@@ -101,8 +90,6 @@ class GameViews {
       });
     }
   }
-
-
 
   updateUIHearts(tries) {
     const heartsContainer = document.querySelector('.hearts')

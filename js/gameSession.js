@@ -1,4 +1,4 @@
-class Game {
+class GameSession {
   constructor(phraseInfo, username) {
     const {phrase, category_id, id} = phraseInfo
     this.phrase = phrase

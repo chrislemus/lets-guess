@@ -1,9 +1,9 @@
 class GameController {
 
   constructor() {
-    this.game = null
+    this.gameSession = null
 
-
+    this.keyboardEventListener()
     this.gameViews = new GameViews()
     this.username = ''
     this.fetchCategories()
@@ -28,43 +28,37 @@ class GameController {
 
   displayTimer() {
     const gameTimer = setInterval(() => {
-      const gameDuration = this.game.gameDuration()
+      const gameDuration = this.gameSession.gameDuration()
       this.gameViews.updateGameTimer(gameDuration)
-      if (this.game.gameOver()) clearInterval(gameTimer);
+      if (this.gameSession.gameOver()) clearInterval(gameTimer);
     }, 100);
   }
 
-  createKeyboards() {
-    const keyboardButtons = document.querySelectorAll('li[letter]');
-    const keyboardExist = keyboardButtons.length === 26
-    if (keyboardExist) {
-      keyboardButtons.forEach(button => button.removeAttribute('disabled'))
-    } else {
-      this.gameViews.createKeyboard()
-      this.keyboardEventListener()
-    }
+  enableAllKeyboards() {
+    const keyboardButtons = document.querySelectorAll('li[disabled]');
+    keyboardButtons.forEach(button => button.removeAttribute('disabled'))
   }
 
   handleNewGuess(letter) {
-    const guestResult = this.game.newGuess(letter);
-    this.gameViews.updateUIHearts(this.game.tries)
+    const guestResult = this.gameSession.newGuess(letter);
+    this.gameViews.updateUIHearts(this.gameSession.tries)
     if (guestResult === 'correct') {
-      this.gameViews.displayCorrectGuest(letter, this.game.phrase)
+      this.gameViews.displayCorrectGuest(letter, this.gameSession.phrase)
     } 
-    if (this.game.gameOver()) {
-      this.gameViews.displayGameOver(this.game)
+    if (this.gameSession.gameOver()) {
+      this.gameViews.displayGameOver(this.gameSession)
       this.uploadGameRecord()
     };
   }
 
 
   uploadGameRecord() {
-    if (this.game.results === 'won') {
+    if (this.gameSession.results === 'won') {
       const {username} = this;
-      const elapsedTime = this.game.gameDuration();
-      const {phraseId} = this.game
+      const elapsedTime = this.gameSession.gameDuration();
+      const {phraseId} = this.gameSession
       Data.uploadNewGameRecord(username, elapsedTime, phraseId)
-      .then(() => this.gameViews.showPhraseRecords(this.game))
+      .then(() => this.gameViews.showPhraseRecords(this.gameSession))
     }
   }
 
@@ -100,12 +94,12 @@ class GameController {
     Data.randomPhraseByCategory(categoryId)
     .then(res => res.json())
     .then(phraseInfo => {
-      this.game = new Game(phraseInfo, this.username)
+      this.gameSession = new GameSession(phraseInfo, this.username)
       this.gameViews.displayPage('playing-screen')
-      this.createKeyboards()
+      this.enableAllKeyboards()
       this.gameViews.clearPhraseRecords()
-      this.gameViews.createPhraseBlanks(this.game.phrase)
-      this.gameViews.updateUIHearts(this.game.tries)
+      this.gameViews.createPhraseBlanks(this.gameSession.phrase)
+      this.gameViews.updateUIHearts(this.gameSession.tries)
       this.displayTimer()
     });
   }

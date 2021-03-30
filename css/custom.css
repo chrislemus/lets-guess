@@ -37,10 +37,6 @@ body {
   max-width: 200px;
 }
 
-/* .categories-wrapper #categories-dropdown {
-  background: red;
-} */
-
 .categories-wrapper progress {
   margin: 0 auto;
   max-width: 100px;
