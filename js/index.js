@@ -2,6 +2,8 @@ class GameController {
 
   constructor() {
     this.game = null
+
+
     this.gameViews = new GameViews()
     this.username = ''
     this.fetchCategories()
@@ -24,6 +26,15 @@ class GameController {
     });
   }
 
+  displayTimer() {
+    const gameTimer = setInterval(() => {
+      const gameDuration = this.game.gameDuration()
+      this.gameViews.updateGameTimer(gameDuration)
+      console.log(gameDuration)
+      if (this.game.gameOver()) clearInterval(gameTimer);
+    }, 100);
+  }
+
   createKeyboards() {
     const keyboardButtons = document.querySelectorAll('li[letter]');
     const keyboardExist = keyboardButtons.length === 26
@@ -41,7 +52,7 @@ class GameController {
     if (guestResult === 'correct') {
       this.gameViews.displayCorrectGuest(letter, this.game.phrase)
     } 
-    if (this.game.gameOver())  this.gameViews.displayGameOver();
+    if (this.game.gameOver()) this.gameViews.displayGameOver();
   }
 
   gameOverEventListener() {
@@ -66,7 +77,6 @@ class GameController {
     })
   }
 
-
   fetchCategories() {
     Data.getCategories()
     .then(res => res.json())
@@ -81,6 +91,7 @@ class GameController {
       this.gameViews.displayPage('playing-screen')
       this.createKeyboards()
       this.gameViews.createPhraseBlanks(this.game.phrase)
+      this.displayTimer()
     });
   }
 }

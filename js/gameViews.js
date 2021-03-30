@@ -11,6 +11,19 @@ class GameViews {
     })
   }
 
+  updateGameTimer(delta) {
+    let seconds = Math.floor(delta % 60)
+    if(seconds < 10) seconds = `0${seconds}`
+
+    let minutes = Math.floor((delta /60))
+    if(minutes < 10) minutes = `0${minutes}`
+
+    const time = `🕐 ${minutes}:${seconds}`
+
+    const timeContainer = document.querySelector('.time-container')
+    timeContainer.innerText = time
+  }
+
   createPhraseBlanks(phrase) {
     const phraseContainer = document.querySelector('#phrase-container')
     phraseContainer.innerHTML = ''

@@ -10,6 +10,7 @@ class Game {
     this.GuessedLetters = new Set([])
     this.tries = 5
     this.username = username
+    this.timerStart = Date.now()
   }
 
   newGuess(letter) {
@@ -26,12 +27,21 @@ class Game {
     return GuessResult
   }
 
+  gameDuration() {
+    const timerEnd = this.timerEnd || Date.now()
+    const elapsedTimeInSeconds = (timerEnd - this.timerStart)/1000
+    return elapsedTimeInSeconds.toFixed(2)
+  }
+
   updateGameResults() {
     if (this.tries === 0) {
       this.results = 'lose'
-    } else if(this.checkForWin()) {
+      this.timerEnd = Date.now()
+    };
+    if(this.checkForWin())  {
       this.results = 'won'
-    }
+      this.timerEnd = Date.now()
+    };
   }
 
   gameOver() {
@@ -43,7 +53,4 @@ class Game {
     const b = this.GuessedLetters
     return a.size === b.size && [...a].every(value => b.has(value));
   }
-
-
-
 }
