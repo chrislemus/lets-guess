@@ -20,5 +20,8 @@ const Data = {
       body: JSON.stringify(gameRecord)
     };
     return fetch( url, configObj )
+  },
+  getPhraseGameRecords: (phraseId) => {
+    return fetch(api + `/phrases/${phraseId}/game_records`)
   }
 }

@@ -64,17 +64,50 @@ class GameViews {
     pageToShow.classList.remove('is-hidden')
   }
 
-  displayGameOver(gameResults) {
+  displayGameOver({results}) {
     const wonMessage = document.querySelector('.game-result-message-won')
     const loseMessage = document.querySelector('.game-result-message-lose')
+
+    this.displayPage('game-end-screen')
+    const gameResultsMessage = document.querySelectorAll('.game-result-message')
+    console.log(gameResultsMessage)
+    gameResultsMessage.forEach(message => {
+      if (message.hasAttribute(results)) {
+        message.classList.remove('is-hidden')
+      } else {
+        message.classList.add('is-hidden')
+      }
+    }) 
     this.displayPage('game-end-screen')
     
-    if (gameResults === 'won') {
-      wonMessage.classList.remove('is-hidden')
-    } else if(gameResults === 'lose') {
-      loseMessage.classList.remove('is-hidden')
+    // if (results === 'won') {
+      
+    //   wonMessage.classList.remove('is-hidden')
+    // } else if(results === 'lose') {
+    //   loseMessage.classList.remove('is-hidden')
+    // }
+  }
+  showPhraseRecords(game) {
+    const {phraseId, results} = game;
+    const phraseTimeStatsWrapper = document.querySelector('.time-stats')
+    phraseTimeStatsWrapper.innerHTML = ''
+    if (results === 'won') {
+      
+      const gameDuration = game.gameDuration()
+      const recordView = (title, record) => ` <p>${title}</p> <p>${record} seconds</p>`;
+      
+      phraseTimeStatsWrapper.innerHTML = recordView('your time', gameDuration) 
+      Data.getPhraseGameRecords(phraseId)
+      .then(res => res.json())
+      .then(records =>  {
+        const {fastest_record, slowest_record} = records
+        if(fastest_record) phraseTimeStatsWrapper.innerHTML += recordView('fastest time', fastest_record) 
+        if(slowest_record) phraseTimeStatsWrapper.innerHTML += recordView('slowest time', slowest_record)  
+      });
     }
   }
+
+
 
   updateUIHearts(tries) {
     const heartsContainer = document.querySelector('.hearts')

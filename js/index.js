@@ -52,7 +52,7 @@ class GameController {
       this.gameViews.displayCorrectGuest(letter, this.game.phrase)
     } 
     if (this.game.gameOver()) {
-      this.gameViews.displayGameOver()
+      this.gameViews.displayGameOver(this.game)
       this.uploadGameRecord()
     };
   }
@@ -63,6 +63,9 @@ class GameController {
       const elapsedTime = this.game.gameDuration();
       const {phraseId} = this.game
       Data.uploadNewGameRecord(username, elapsedTime, phraseId)
+      .then(() => this.gameViews.showPhraseRecords(this.game))
+    } else {
+      this.gameViews.showPhraseRecords(this.game)
     }
   }
 
@@ -102,6 +105,7 @@ class GameController {
       this.gameViews.displayPage('playing-screen')
       this.createKeyboards()
       this.gameViews.createPhraseBlanks(this.game.phrase)
+      this.gameViews.updateUIHearts(this.game.tries)
       this.displayTimer()
     });
   }
