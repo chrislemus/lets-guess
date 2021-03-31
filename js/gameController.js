@@ -2,7 +2,6 @@ class GameController {
 
   constructor() {
     this.gameSession = null
-
     this.keyboardEventListener()
     this.gameViews = new GameViews()
     this.username = ''
@@ -26,11 +25,12 @@ class GameController {
     });
   }
 
-  displayTimer() {
+  startGameSessionTimer() {
+    const {gameSession, gameViews} = this
     const gameTimer = setInterval(() => {
-      const gameDuration = this.gameSession.gameDuration()
-      this.gameViews.updateGameTimer(gameDuration)
-      if (this.gameSession.gameOver()) clearInterval(gameTimer);
+      const gameDuration = gameSession.gameDuration()
+      gameViews.updateGameTimer(gameDuration)
+      if (gameSession.gameOver()) clearInterval(gameTimer);
     }, 100);
   }
 
@@ -40,26 +40,31 @@ class GameController {
   }
 
   handleNewGuess(letter) {
-    const guestResult = this.gameSession.newGuess(letter);
-    this.gameViews.updateUIHearts(this.gameSession.tries)
+    const {gameSession, gameViews} = this
+    const guestResult = gameSession.newGuess(letter);
+    gameViews.updateUIHearts(gameSession.tries)
     if (guestResult === 'correct') {
-      this.gameViews.displayCorrectGuest(letter, this.gameSession.phrase)
+      gameViews.displayCorrectGuest(letter, gameSession.phrase)
     } 
-    if (this.gameSession.gameOver()) {
-      this.gameViews.displayGameOver(this.gameSession)
-      this.uploadGameRecord()
+    if (gameSession.gameOver()) {
+      gameViews.displayGameOver(gameSession)
+      if (gameSession.results === 'won') this.uploadGameRecord();
     };
   }
 
 
   uploadGameRecord() {
-    if (this.gameSession.results === 'won') {
-      const {username} = this;
-      const elapsedTime = this.gameSession.gameDuration();
-      const {phraseId} = this.gameSession
-      Data.uploadNewGameRecord(username, elapsedTime, phraseId)
-      .then(() => this.gameViews.showPhraseRecords(this.gameSession))
-    }
+    const {username, gameSession} = this;
+    const {phraseId} = gameSession
+    const gameDuration = gameSession.gameDuration();
+    Data.uploadNewGameRecord(username, gameDuration, phraseId)
+    .then(() => {
+      Data.getPhraseGameRecords(phraseId)
+      .then(res => res.json())
+      .then(({fastest_record, slowest_record}) =>  {
+        this.gameViews.showPhraseRecords(gameDuration, fastest_record, slowest_record)
+      }); 
+    })
   }
 
   gameOverEventListener() {
@@ -91,12 +96,13 @@ class GameController {
   }
   
   startGame(categoryId) {
+    const { gameViews,username } = this
     Data.randomPhraseByCategory(categoryId)
     .then(res => res.json())
     .then(phraseInfo => {
-      this.gameSession = new GameSession(phraseInfo, this.username)
-      this.gameViews.displayNewGameSessionScreen(this.gameSession)
-      this.displayTimer()
+      this.gameSession = new GameSession(phraseInfo, username)
+      gameViews.displayNewGameSessionScreen(this.gameSession)
+      this.startGameSessionTimer()
     });
   }
 }

@@ -77,22 +77,13 @@ class GameViews {
     phraseTimeStatsWrapper.innerHTML = ''
   }
 
-  showPhraseRecords(game) {
-    const {phraseId, results} = game;
-    if (results === 'won') {
-      const phraseTimeStatsWrapper = document.querySelector('.time-stats')
-      const gameDuration = game.gameDuration()
-      const recordView = (title, record) => ` <p>${title}</p> <p>${record} secs</p>`;
-      
-      phraseTimeStatsWrapper.innerHTML = recordView('your time', gameDuration) 
-      Data.getPhraseGameRecords(phraseId)
-      .then(res => res.json())
-      .then(records =>  {
-        const {fastest_record, slowest_record} = records
-        if(fastest_record) phraseTimeStatsWrapper.innerHTML += recordView('fastest time', fastest_record) 
-        if(slowest_record) phraseTimeStatsWrapper.innerHTML += recordView('slowest time', slowest_record)  
-      });
-    }
+  showPhraseRecords(gameDuration, fastest_record=null, slowest_record=null) {
+    const phraseTimeStatsWrapper = document.querySelector('.time-stats')
+    const recordView = (title, record) => ` <p>${title}</p> <p>${record} secs</p>`;
+    
+    phraseTimeStatsWrapper.innerHTML = recordView('your time', gameDuration) 
+    if(fastest_record) phraseTimeStatsWrapper.innerHTML += recordView('fastest time', fastest_record) 
+    if(slowest_record) phraseTimeStatsWrapper.innerHTML += recordView('slowest time', slowest_record)  
   }
 
   updateUIHearts(tries) {
