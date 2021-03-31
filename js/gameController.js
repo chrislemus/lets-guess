@@ -95,11 +95,7 @@ class GameController {
     .then(res => res.json())
     .then(phraseInfo => {
       this.gameSession = new GameSession(phraseInfo, this.username)
-      this.gameViews.displayPage('playing-screen')
-      this.enableAllKeyboards()
-      this.gameViews.clearPhraseRecords()
-      this.gameViews.createPhraseBlanks(this.gameSession.phrase)
-      this.gameViews.updateUIHearts(this.gameSession.tries)
+      this.gameViews.displayNewGameSessionScreen(this.gameSession)
       this.displayTimer()
     });
   }

@@ -2,29 +2,21 @@ class GameViews {
 
 
   updateGameTimer(delta) {
-    let seconds = Math.floor(delta % 60)
-    if(seconds < 10) seconds = `0${seconds}`
-
-    let minutes = Math.floor((delta /60))
-    if(minutes < 10) minutes = `0${minutes}`
-
+    const formattedTime = (time) => time < 10 ? `0${time}` : time
+    const seconds =formattedTime( Math.floor(delta % 60) )
+    const minutes = formattedTime( Math.floor((delta /60)) )
     const time = `🕐 ${minutes}:${seconds}`
-
     const timeContainer = document.querySelector('.time-container')
     timeContainer.innerText = time
   }
 
   createPhraseBlanks(phrase) {
     const phraseContainer = document.querySelector('#phrase-container')
-    phraseContainer.innerHTML = ''
-    const letterCountPerWord = phrase.split(' ').map(word => word.length)
-    const phraseGroups = letterCountPerWord.map(letterCount => {
-      let wordGroup = '<ul class="word-group">'
-      for(let i=0; i < letterCount; i++) wordGroup += '<li></li>';
-      wordGroup += '</ul>'
-      return wordGroup
-    })
-    phraseContainer.innerHTML += phraseGroups.join('')
+    const phraseBlanks = phrase.split(' ').map(word => {
+      const letterBlank =  Array(word.length).fill('<li></li>').join('')
+      return `<ul class="word-group">${letterBlank}</ul>`
+    }).join('')
+    phraseContainer.innerHTML = phraseBlanks
   }
 
   addCategoriesDropdownData(categories) {
@@ -37,14 +29,25 @@ class GameViews {
   displayCorrectGuest( letterGuessed, phrase) {
     const wordGroups = document.querySelectorAll('.word-group')
     phrase.split(' ').forEach((word, wordIdx) => {
-      const wordGroupBlanks = wordGroups[wordIdx].querySelectorAll('li')
+      const letterBlanks = wordGroups[wordIdx].querySelectorAll('li')
       const letters = word.split('')
       letters.forEach((letter, idx) => {
-        if(letter === letterGuessed) {
-          wordGroupBlanks[idx].innerHTML = `${letterGuessed.toUpperCase()}`
-        }
+        if(letter === letterGuessed) letterBlanks[idx].innerHTML = letterGuessed.toUpperCase();
       })
-    })   
+    })      
+  }
+  displayNewGameSessionScreen(gameSession) {
+    const {phrase, tries} = gameSession
+    this.displayPage('playing-screen')
+    this.clearPhraseRecords()
+    this.createPhraseBlanks(phrase)
+    this.updateUIHearts(tries)
+    this.enableAllKeyboards()
+  }
+
+  enableAllKeyboards() {
+    const keyboardButtons = document.querySelectorAll('li[disabled]');
+    keyboardButtons.forEach(button => button.removeAttribute('disabled'))
   }
 
   displayPage(pageID) {
@@ -57,9 +60,10 @@ class GameViews {
   displayGameOver({results, phrase}) {
     this.displayPage('game-end-screen')
     const gameResultsMessage = document.querySelectorAll('.game-result-message')
-    const phraseToGuess = document.querySelector('.phrase-to-guess')
-    phraseToGuess.innerHTML = phrase.toUpperCase()
+    const phraseToGuessPlaceholder = document.querySelector('.phrase-to-guess')
+    phraseToGuessPlaceholder.innerHTML = phrase.toUpperCase()
     gameResultsMessage.forEach(message => {
+
       if (message.hasAttribute(results)) {
         message.classList.remove('is-hidden')
       } else {
@@ -93,11 +97,8 @@ class GameViews {
 
   updateUIHearts(tries) {
     const heartsContainer = document.querySelector('.hearts')
-    const hearts = []
-    while (hearts.length < tries) {
-      hearts.push('<li>♥</li>')
-    }
-    heartsContainer.innerHTML = hearts.join('')
+    const hearts =  Array(tries).fill('<li>♥</li>').join('')
+    heartsContainer.innerHTML = hearts
   }
 
 }
