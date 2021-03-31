@@ -63,7 +63,6 @@ class GameViews {
     const phraseToGuessPlaceholder = document.querySelector('.phrase-to-guess')
     phraseToGuessPlaceholder.innerHTML = phrase.toUpperCase()
     gameResultsMessage.forEach(message => {
-
       if (message.hasAttribute(results)) {
         message.classList.remove('is-hidden')
       } else {
